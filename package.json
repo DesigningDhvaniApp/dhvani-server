@@ -1,0 +1,32 @@
+{
+  "name": "typeorm-pg",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/index.ts",
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+    "migration:create": "npm run typeorm -- migration:create ./src/db/migrations/static",
+    "migration:generate": "npm run typeorm -- migration:generate -d ./dbconfig.ts ./src/db/migrations/generated",
+    "migration:run": "npm run typeorm -- -d ./dbconfig.ts migration:run",
+    "migration:revert": "npm run typeorm -- -d ./dbconfig.ts migration:revert"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "pg": "^8.12.0",
+    "typeorm": "^0.3.20",
+    "typeorm-naming-strategies": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.4",
+    "dotenv": "^16.4.5",
+    "nodemon": "^3.1.3",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.4.5"
+  }
+}
