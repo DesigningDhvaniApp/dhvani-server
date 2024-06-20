@@ -2,6 +2,7 @@ import { DataSource } from 'typeorm';
 
 import { config } from "dotenv";
 import { SnakeNamingStrategy } from "typeorm-naming-strategies/snake-naming.strategy";
+import { Member } from '../entities/Member';
 
 config()
 
@@ -15,7 +16,7 @@ const AppDataSource = new DataSource({
   schema: process.env.DB_SCHEMA,
   synchronize: false,
   logging: false,
-  entities: [],
+  entities: [Member],
   migrations: [],
   subscribers: [],
   migrationsTableName: "_migrations",
