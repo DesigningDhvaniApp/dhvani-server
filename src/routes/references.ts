@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { ReferenceController } from '..//features/reference/Reference.controller';
+import { ReferenceController } from '../features/reference/Reference.controller';
 
 const router = Router();
 const referenceController = new ReferenceController();
