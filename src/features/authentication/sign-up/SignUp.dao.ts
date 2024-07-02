@@ -1,0 +1,24 @@
+import AppDataSource from "../../../db/data-source";
+import { Member } from "../../../entities/Member";
+
+export class SignUpDao {
+  private memberRepository = AppDataSource.getRepository(Member)
+
+  async userExists(member: Partial<Member>): Promise<boolean> {
+    if (await this.findMemberByUsername(member.userName)) return true
+    if (await this.findMemberById(member.id)) return true
+    return false
+  }
+
+  async findMemberByUsername(userName: string): Promise<Member | null> {
+    return await this.memberRepository.findOneBy({ userName: userName })
+  }
+
+  async findMemberById(id: number): Promise<Member | null> {
+    return await this.memberRepository.findOneBy({ id: id })
+  }
+
+  async saveMemberInDB(member: Partial<Member>): Promise<Member> {
+    return await this.memberRepository.save(member)
+  }
+}

@@ -57,7 +57,6 @@ export class ReferenceController {
   public async findReference(req: Request, res: Response) {
     try {
       const { id } = req.params
-      console.log(id)
       const result = await this.referenceService.findReference(parseInt(id))
       return res.status(200).json(result)
     } catch (error) {
