@@ -1,5 +1,6 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Address } from "./Address";
+import { BcryptUtil } from "../utils/shared/BcryptUtil";
 
 @Entity()
 export class Member {
@@ -23,6 +24,11 @@ export class Member {
 
   @Column({ type: 'varchar' })
   password: string
+
+  @BeforeInsert()
+  async encodeString() {
+    this.password = await BcryptUtil.encodeString(this.password)
+  }
 
   @OneToOne(() => Address, { cascade: true })
   @JoinColumn({ name: 'address_id' })
