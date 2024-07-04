@@ -1,4 +1,4 @@
-import { HttpErrorResponse, Response200 } from "../../../utils/Response";
+import { HttpErrorResponse, Response200, SendErrorResponse } from "../../../utils/Response";
 import { SignUpService } from "./SignUp.service";
 import { Request, Response } from 'express'
 
@@ -14,8 +14,7 @@ export class SignUpController {
       const result = await this.signUpService.createMember(req.body)
       return res.status(Response200.code).json(result)
     } catch (error) {
-      const { message, code } = error as HttpErrorResponse
-      return res.status(code).json(message)
+      return SendErrorResponse(error, res)
     }
   }
 
@@ -25,8 +24,7 @@ export class SignUpController {
       await this.signUpService.updateMember(member)
       return res.status(200).json("Member updated!")
     } catch (error) {
-      const { message, code } = error as HttpErrorResponse
-      return res.status(code).json(message)
+      return SendErrorResponse(error, res)
     }
   }
 
@@ -36,8 +34,7 @@ export class SignUpController {
       const result = await this.signUpService.findMember(parseInt(id))
       return res.status(200).json(result)
     } catch (error) {
-      const { message, code } = error as HttpErrorResponse
-      return res.status(code).json(message)
+      return SendErrorResponse(error, res)
     }
   }
 
@@ -47,8 +44,7 @@ export class SignUpController {
       await this.signUpService.deleteMember(parseInt(id))
       return res.status(200).json(`Member with id = ${id} is deleted!`)
     } catch (error) {
-      const { message, code } = error as HttpErrorResponse
-      return res.status(code).json(message)
+      return SendErrorResponse(error, res)
     }
   }
 }

@@ -4,9 +4,9 @@ import { SignUpController } from '../features/authentication/sign-up/SignUp.cont
 const router = Router();
 const signUpController = new SignUpController();
 
-router.post('/signup', signUpController.createMember.bind(signUpController));
-router.put('/signup', signUpController.updateMember.bind(signUpController));
-router.get('/signup/:id', signUpController.findMember.bind(signUpController));
-router.delete('/signup/:id', signUpController.deleteMember.bind(signUpController));
+router.post('/member/signup', signUpController.createMember.bind(signUpController));
+router.put('/member/update', signUpController.updateMember.bind(signUpController));
+router.get('/member/:id', signUpController.findMember.bind(signUpController));
+router.delete('/member/:id', signUpController.deleteMember.bind(signUpController));
 
 export default router;

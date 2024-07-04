@@ -23,6 +23,10 @@ export class SignUpService {
 
   async updateMember(member: Member){
     const { id } = member
+    if (!id) {
+      throw new HttpError("Please provide member Id", 400)
+    }
+    
     const existingMember = await this.signUpDao.findMemberById(id)
     if (!existingMember) {
       throw new HttpError(Response404.message, Response404.code)

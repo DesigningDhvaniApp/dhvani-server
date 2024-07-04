@@ -13,14 +13,17 @@ export class SignUpDao {
   }
 
   async findMemberByUsername(userName: string): Promise<Member | null> {
+    if (!userName) return null
     return await this.memberRepository.findOneBy({ userName: userName })
   }
 
   async findMemberById(id: number): Promise<Member | null> {
+    if (!id) return null
     return await this.memberRepository.findOneBy({ id: id })
   }
 
   async findMemberByEmail(email: string): Promise<Member | null> {
+    if (!email) return null
     return await this.memberRepository.findOneBy({ email: email })
   }
 
