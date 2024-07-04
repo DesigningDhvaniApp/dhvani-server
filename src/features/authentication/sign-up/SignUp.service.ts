@@ -26,11 +26,16 @@ export class SignUpService {
     if (!id) {
       throw new HttpError("Please provide member Id", 400)
     }
-    
+
     const existingMember = await this.signUpDao.findMemberById(id)
     if (!existingMember) {
       throw new HttpError(Response404.message, Response404.code)
     }
+
+    if (member.password) {
+      member.password = await BcryptUtil.encodeString(member.password);
+    }
+    
     await this.signUpDao.updateMember(member)
   }
 
