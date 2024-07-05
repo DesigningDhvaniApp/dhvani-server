@@ -1,3 +1,6 @@
+import { Response } from "express"
+
+
 export const Response200 = {
   code: 200,
   error: false,
@@ -48,4 +51,8 @@ export interface HttpErrorResponse {
   code: number
   message: string
   error: boolean
+}
+
+export const SendErrorResponse = (error: HttpErrorResponse | Error, res: Response) => { 
+  return res.status(error instanceof HttpError ? error.code : 500).send(error.message) 
 }

@@ -1,3 +1,4 @@
+
 import AppDataSource from "../../../db/data-source";
 import { Member } from "../../../entities/Member";
 
@@ -7,18 +8,36 @@ export class SignUpDao {
   async userExists(member: Partial<Member>): Promise<boolean> {
     if (await this.findMemberByUsername(member.userName)) return true
     if (await this.findMemberById(member.id)) return true
+    if (await this.findMemberByEmail(member.email)) return true
     return false
   }
 
   async findMemberByUsername(userName: string): Promise<Member | null> {
+    if (!userName) return null
     return await this.memberRepository.findOneBy({ userName: userName })
   }
 
   async findMemberById(id: number): Promise<Member | null> {
+    if (!id) return null
     return await this.memberRepository.findOneBy({ id: id })
   }
 
+  async findMemberByEmail(email: string): Promise<Member | null> {
+    if (!email) return null
+    return await this.memberRepository.findOneBy({ email: email })
+  }
+
   async saveMemberInDB(member: Partial<Member>): Promise<Member> {
-    return await this.memberRepository.save(member)
+    const entity = Object.assign(new Member(), member)
+    return await this.memberRepository.save(entity)
+  }
+
+  async updateMember(member: Member) {
+    const entity = Object.assign(new Member(), member)
+    return await this.memberRepository.update(entity.id, entity)
+  }
+
+  async deleteMember(id: number) {
+    return await this.memberRepository.delete(id)
   }
 }
