@@ -9,7 +9,8 @@
     "migration:create": "npm run typeorm -- migration:create ./src/db/migrations/static",
     "migration:generate": "npm run typeorm -- migration:generate -d ./dbconfig.ts ./src/db/migrations/generated",
     "migration:run": "npm run typeorm -- -d ./dbconfig.ts migration:run",
-    "migration:revert": "npm run typeorm -- -d ./dbconfig.ts migration:revert"
+    "migration:revert": "npm run typeorm -- -d ./dbconfig.ts migration:revert",
+    "migration:show": "npm run typeorm -- -d ./dbconfig.ts migration:show"
   },
   "keywords": [],
   "author": "",

@@ -15,8 +15,9 @@ export class SignUpService {
     if (await this.signUpDao.userExists(member)) {
       throw new HttpError(ResponseConflict.message, ResponseConflict.code)
     }
-    if (member.password) {
-      member.password = await BcryptUtil.encodeString(member.password);
+
+    if (!member.password) {
+      throw new HttpError("Please provide password", 400)
     }
     return await this.signUpDao.saveMemberInDB(member)
   }
@@ -32,10 +33,6 @@ export class SignUpService {
       throw new HttpError(Response404.message, Response404.code)
     }
 
-    if (member.password) {
-      member.password = await BcryptUtil.encodeString(member.password);
-    }
-    
     await this.signUpDao.updateMember(member)
   }
 

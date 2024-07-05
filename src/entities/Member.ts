@@ -1,4 +1,4 @@
-import { BeforeInsert, Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Address } from "./Address";
 import { BcryptUtil } from "../utils/shared/BcryptUtil";
 
@@ -26,6 +26,7 @@ export class Member {
   password: string
 
   @BeforeInsert()
+  @BeforeUpdate()
   async encodeString() {
     this.password = await BcryptUtil.encodeString(this.password)
   }

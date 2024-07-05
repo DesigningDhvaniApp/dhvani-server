@@ -28,11 +28,13 @@ export class SignUpDao {
   }
 
   async saveMemberInDB(member: Partial<Member>): Promise<Member> {
-    return await this.memberRepository.save(member)
+    const entity = Object.assign(new Member(), member)
+    return await this.memberRepository.save(entity)
   }
 
   async updateMember(member: Member) {
-    return await this.memberRepository.update(member.id, member)
+    const entity = Object.assign(new Member(), member)
+    return await this.memberRepository.update(entity.id, entity)
   }
 
   async deleteMember(id: number) {
