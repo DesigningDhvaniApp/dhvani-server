@@ -1,16 +1,16 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Reference {
-  @PrimaryGeneratedColumn({ type: 'integer' })
+  @PrimaryGeneratedColumn({ type: 'integer' })
   id: number;
 
   @Column({ type: 'varchar' })
-  name: string
+  name: string;
 
   @Column({ type: 'integer' })
-  age: number
+  age: number;
 
   @Column({ type: 'boolean' })
-  isActive: boolean
+  isActive: boolean;
 }

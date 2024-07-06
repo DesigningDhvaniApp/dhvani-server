@@ -1,15 +1,15 @@
 import { DataSource } from 'typeorm';
 
-import { config } from "dotenv";
-import { SnakeNamingStrategy } from "typeorm-naming-strategies/snake-naming.strategy";
+import { config } from 'dotenv';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies/snake-naming.strategy';
 import { Reference } from '../entities/Reference';
 import { Member } from '../entities/Member';
 import { Address } from '../entities/Address';
 
-config()
+config();
 
 const AppDataSource = new DataSource({
-  type: "postgres",
+  type: 'postgres',
   host: process.env.DB_HOST,
   port: Number(process.env.DB_PORT),
   username: process.env.DB_USER,
@@ -21,8 +21,8 @@ const AppDataSource = new DataSource({
   entities: [Reference, Member, Address],
   migrations: [],
   subscribers: [],
-  migrationsTableName: "_migrations",
-  namingStrategy: new SnakeNamingStrategy()
-})
+  migrationsTableName: '_migrations',
+  namingStrategy: new SnakeNamingStrategy(),
+});
 
 export default AppDataSource;

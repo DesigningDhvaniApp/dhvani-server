@@ -1,6 +1,5 @@
-
 export interface MailData {
-  to: string | string[],
-  subject: string
-  text: string
+  to: string | string[];
+  subject: string;
+  text: string;
 }

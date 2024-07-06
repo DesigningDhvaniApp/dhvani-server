@@ -1,11 +1,11 @@
-import { ReferenceService } from "./Reference.service";
-import { Request, Response } from 'express'
+import { ReferenceService } from './Reference.service';
+import { Request, Response } from 'express';
 
 export class ReferenceController {
-  private referenceService: ReferenceService
+  private referenceService: ReferenceService;
 
   constructor() {
-    this.referenceService = new ReferenceService()
+    this.referenceService = new ReferenceService();
   }
 
   /**
@@ -20,11 +20,11 @@ export class ReferenceController {
    */
   public async create(req: Request, res: Response) {
     try {
-      const reference_data = req.body
-      const result = await this.referenceService.create(reference_data)
-      return res.status(201).json(result)
+      const reference_data = req.body;
+      const result = await this.referenceService.create(reference_data);
+      return res.status(201).json(result);
     } catch (error) {
-      return res.status(500).json(error.message)
+      return res.status(500).json(error.message);
     }
   }
 
@@ -41,11 +41,11 @@ export class ReferenceController {
    */
   public async update(req: Request, res: Response) {
     try {
-      const reference_data = req.body
-      await this.referenceService.update(reference_data)
-      return res.status(200).json("Reference updated!")
+      const reference_data = req.body;
+      await this.referenceService.update(reference_data);
+      return res.status(200).json('Reference updated!');
     } catch (error) {
-      return res.status(500).json(error.message)
+      return res.status(500).json(error.message);
     }
   }
 
@@ -56,11 +56,11 @@ export class ReferenceController {
    */
   public async findReference(req: Request, res: Response) {
     try {
-      const { id } = req.params
-      const result = await this.referenceService.findReference(parseInt(id))
-      return res.status(200).json(result)
+      const { id } = req.params;
+      const result = await this.referenceService.findReference(parseInt(id));
+      return res.status(200).json(result);
     } catch (error) {
-      return res.status(500).json(error.message)
+      return res.status(500).json(error.message);
     }
   }
 
@@ -71,16 +71,15 @@ export class ReferenceController {
    */
   public async deleteReference(req: Request, res: Response) {
     try {
-      const { id } = req.params
-      await this.referenceService.deleteReference(parseInt(id))
-      return res.status(200).json(`Reference with id = ${id} is deleted!`)
+      const { id } = req.params;
+      await this.referenceService.deleteReference(parseInt(id));
+      return res.status(200).json(`Reference with id = ${id} is deleted!`);
     } catch (error) {
-      return res.status(500).json(error.message)
+      return res.status(500).json(error.message);
     }
   }
 
-  public async sendMail(req: Request, res: Response) {
-    await this.referenceService.sendMailExample()
+  public async sendMail() {
+    await this.referenceService.sendMailExample();
   }
-
 }

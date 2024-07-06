@@ -1,7 +1,7 @@
-import NodeMailer from 'nodemailer'
+import NodeMailer from 'nodemailer';
 import dotenv from 'dotenv';
 import { MailData } from './Types';
-dotenv.config()
+dotenv.config();
 
 export class MailService {
   createTransporter() {
@@ -13,11 +13,11 @@ export class MailService {
         user: process.env.MAIL_AUTH_USER,
         pass: process.env.MAIL_AUTH_PASSWORD,
       },
-    })
+    });
   }
 
   async send(mailData: MailData) {
-    const transporter = this.createTransporter()
+    const transporter = this.createTransporter();
 
     try {
       await transporter.sendMail({
@@ -25,9 +25,9 @@ export class MailService {
         to: mailData.to,
         subject: mailData.subject,
         text: mailData.text,
-      })
+      });
     } catch (error) {
-      throw new Error('Unable to send mail')
+      throw new Error('Unable to send mail');
     }
   }
 }

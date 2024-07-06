@@ -1,22 +1,22 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Address {
-  @PrimaryGeneratedColumn({ type: 'integer' })
+  @PrimaryGeneratedColumn({ type: 'integer' })
   id: number;
 
   @Column({ type: 'varchar' })
-  addressLine: string
+  addressLine: string;
 
   @Column({ type: 'varchar' })
-  city: string
+  city: string;
 
   @Column({ type: 'varchar' })
-  state: string
+  state: string;
 
   @Column({ type: 'varchar' })
-  country: string
+  country: string;
 
   @Column({ type: 'integer' })
-  zipCode: number
+  zipCode: number;
 }
