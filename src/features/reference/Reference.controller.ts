@@ -79,4 +79,8 @@ export class ReferenceController {
     }
   }
 
+  public async sendMail(req: Request, res: Response) {
+    await this.referenceService.sendMailExample()
+  }
+
 }

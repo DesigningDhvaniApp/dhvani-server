@@ -8,5 +8,6 @@ router.post('/', referenceController.create.bind(referenceController));
 router.put('/', referenceController.update.bind(referenceController));
 router.get('/:id', referenceController.findReference.bind(referenceController));
 router.delete('/:id', referenceController.deleteReference.bind(referenceController));
+router.post('/sendMail', referenceController.sendMail.bind(referenceController));
 
 export default router;
