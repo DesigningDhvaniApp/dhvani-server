@@ -1,13 +1,17 @@
 import { Reference } from "../../entities/Reference";
+import { MailService } from "../mail-service/MailService";
+import { MailData } from "../mail-service/Types";
 import { ReferenceDao } from "./Reference.dao";
 import { ReferenceRequestBody } from "./Types";
-
+import NodeMailer from 'nodemailer'
 
 export class ReferenceService {
   private referenceDAO: ReferenceDao
+  private mailService: MailService
 
   constructor() {
     this.referenceDAO = new ReferenceDao()
+    this.mailService = new MailService()
   }
 
   async create(reference_data: ReferenceRequestBody): Promise<Reference> {
@@ -46,5 +50,14 @@ export class ReferenceService {
     }
 
     await this.referenceDAO.deleteById(id)
+  }
+
+  async sendMailExample() {
+    const mailData: MailData = {
+      to: ['anjireddy12382@gmail.com', 'satishreddysr777@gmail.com'],
+      subject: 'This is Nodemailer',
+      text: 'Nodemailer development test'
+    }
+    await this.mailService.send(mailData)
   }
 }
