@@ -1,37 +1,45 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Address } from "./Address";
-import { BcryptUtil } from "../utils/shared/BcryptUtil";
+import {
+  BeforeInsert,
+  BeforeUpdate,
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Address } from './Address';
+import { BcryptUtil } from '../utils/shared/BcryptUtil';
 
 @Entity()
 export class Member {
-  @PrimaryGeneratedColumn({ type: 'integer' })
+  @PrimaryGeneratedColumn({ type: 'integer' })
   id: number;
 
   @Column({ type: 'varchar' })
-  firstName: string
+  firstName: string;
 
   @Column({ type: 'varchar' })
-  lastName: string
+  lastName: string;
 
   @Column({ type: 'bigint' })
-  phone: number
+  phone: number;
 
   @Column({ type: 'varchar' })
-  userName: string
+  userName: string;
 
   @Column({ type: 'varchar' })
-  email: string
+  email: string;
 
   @Column({ type: 'varchar' })
-  password: string
+  password: string;
 
   @BeforeInsert()
   @BeforeUpdate()
   async encodeString() {
-    this.password = await BcryptUtil.encodeString(this.password)
+    this.password = await BcryptUtil.encodeString(this.password);
   }
 
   @OneToOne(() => Address, { cascade: true })
   @JoinColumn({ name: 'address_id' })
-  address: Address
+  address: Address;
 }
