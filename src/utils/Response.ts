@@ -1,58 +1,57 @@
-import { Response } from "express"
-
+import { Response } from 'express';
 
 export const Response200 = {
   code: 200,
   error: false,
-  message: "Success"
-}
+  message: 'Success',
+};
 
 export const Response400 = {
   code: 400,
   error: true,
-  message: "Bad Request"
-}
+  message: 'Bad Request',
+};
 
 export const Response403 = {
   code: 403,
   error: true,
-  message: "Access Denied"
-}
+  message: 'Access Denied',
+};
 
 export const Response404 = {
   code: 404,
   error: true,
-  message: "Not Found"
-}
+  message: 'Not Found',
+};
 
 export const Response500 = {
   code: 500,
   error: true,
-  message: "Something went wrong"
-}
+  message: 'Something went wrong',
+};
 
 export const ResponseConflict = {
   code: 400,
   error: true,
-  message: "Already Exists"
-}
+  message: 'Already Exists',
+};
 
 export class HttpError {
-  code: number
-  message: string
+  code: number;
+  message: string;
 
   constructor(message: string, code: number) {
-    this.code = code
-    this.message = message
+    this.code = code;
+    this.message = message;
   }
 }
 
 export interface HttpErrorResponse {
-  code: number
-  message: string
-  error: boolean
+  code: number;
+  message: string;
+  error: boolean;
 }
 
-export const SendErrorResponse = (error: HttpErrorResponse | Error, res: Response) => { 
-  return res.status(error instanceof HttpError ? error.code : 500).send(error.message) 
-}
+export const SendErrorResponse = (error: HttpErrorResponse | Error, res: Response) => {
+  return res.status(error instanceof HttpError ? error.code : 500).send(error.message);
+};
