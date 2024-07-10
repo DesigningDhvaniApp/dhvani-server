@@ -2,6 +2,7 @@ import express from 'express';
 import AppDataSource from './db/data-source';
 import referenceRoutes from './routes/references';
 import authRoutes from './routes/auth';
+import mailServiceRoutes from './routes/mailService';
 
 const app = express();
 
@@ -9,6 +10,7 @@ app.use(express.json());
 
 app.use('/auth', authRoutes);
 app.use('/references', referenceRoutes);
+app.use('/mailService', mailServiceRoutes);
 
 AppDataSource.initialize()
   .then(() => {
