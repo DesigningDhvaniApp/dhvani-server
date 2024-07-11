@@ -1,5 +1,6 @@
 export interface MailData {
   to: string | string[];
   subject: string;
-  text: string;
+  templateName: string;
+  replacements: Record<string, string>;
 }
