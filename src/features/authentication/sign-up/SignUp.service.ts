@@ -28,9 +28,9 @@ export class SignUpService {
       templateName: 'welcome',
       replacements: {
         firstName: member.firstName,
-        lastName: member.lastName
-      }
-    })
+        lastName: member.lastName,
+      },
+    });
     return member;
   }
 

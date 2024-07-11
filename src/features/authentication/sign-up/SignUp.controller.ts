@@ -15,8 +15,8 @@ const memberSchema = yup.object({
     city: yup.string().required(),
     state: yup.string().required(),
     country: yup.string().required(),
-    zipCode: yup.number().required()
-  })
+    zipCode: yup.number().required(),
+  }),
 });
 
 export class SignUpController {
