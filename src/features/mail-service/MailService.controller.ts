@@ -12,7 +12,7 @@ export class MailServiceController {
 
   public async sendMail(req: Request, res: Response) {
     try {
-      const { email, userName } = req.body
+      const { email, userName } = req.body;
       const mailData: MailData = {
         to: email,
         subject: 'Welcome to Our Service',
@@ -21,12 +21,11 @@ export class MailServiceController {
           name: userName, // Replace {{username}} in your template
         },
       };
-  
+
       const result = await this.mailService.send(mailData);
       return res.status(Response200.code).json(result);
     } catch (error) {
       return SendErrorResponse(error, res);
     }
-    
   }
 }
