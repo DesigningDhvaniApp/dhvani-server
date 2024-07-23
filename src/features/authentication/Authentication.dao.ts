@@ -1,9 +1,8 @@
-import { Member } from "../../entities/Member";
-import AppDataSource from "../../db/data-source";
-
+import { Member } from '../../entities/Member';
+import AppDataSource from '../../db/data-source';
 
 export class AuthenticationDao {
-    private memberRepository = AppDataSource.getRepository(Member);
+  private memberRepository = AppDataSource.getRepository(Member);
 
   async userExists(member: Partial<Member>): Promise<boolean> {
     if (await this.findMemberByUsername(member.userName)) return true;
@@ -11,7 +10,7 @@ export class AuthenticationDao {
     if (await this.findMemberByEmail(member.email)) return true;
     return false;
   }
-  
+
   async findMemberByUsername(userName: string): Promise<Member | null> {
     if (!userName) return null;
     return await this.memberRepository.findOneBy({ userName: userName });
@@ -43,18 +42,18 @@ export class AuthenticationDao {
 
   async prepareMemberWithInfo(id: number): Promise<Member> {
     return await this.memberRepository
-    .createQueryBuilder('member')
-    .leftJoinAndSelect('member.address', 'address')
-    .select([
-      'member.id',
-      'member.firstName',
-      'member.lastName',
-      'member.phone',
-      'member.userName',
-      'member.email',
-      'address',
-    ])
-    .where('member.id = :id', { id: id })
-    .getOne();
+      .createQueryBuilder('member')
+      .leftJoinAndSelect('member.address', 'address')
+      .select([
+        'member.id',
+        'member.firstName',
+        'member.lastName',
+        'member.phone',
+        'member.userName',
+        'member.email',
+        'address',
+      ])
+      .where('member.id = :id', { id: id })
+      .getOne();
   }
 }

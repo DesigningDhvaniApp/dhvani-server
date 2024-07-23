@@ -1,18 +1,17 @@
-import { JwtToken } from "../../utils/shared/JwttokenUtil";
-import AppDataSource from "../../db/data-source";
-import { Member } from "../../entities/Member";
-import { HttpError, Response404, ResponseConflict } from "../../utils/Response";
-import { MailService } from "../mail-service/MailService";
-import { AuthenticationDao } from "./Authentication.dao";
+import { JwtToken } from '../../utils/shared/JwttokenUtil';
+import AppDataSource from '../../db/data-source';
+import { Member } from '../../entities/Member';
+import { HttpError, Response404, ResponseConflict } from '../../utils/Response';
+import { MailService } from '../mail-service/MailService';
+import { AuthenticationDao } from './Authentication.dao';
 import { compare } from 'bcrypt';
-import { MemberWithToken } from '../../features/authentication/Types'
-
+import { MemberWithToken } from '../../features/authentication/Types';
 
 export class AuthenticationService {
-    private authenticationDao: AuthenticationDao;
-    private mailService: MailService;
-    private jwtToken: JwtToken;
-    private memberRepository = AppDataSource.getRepository(Member);
+  private authenticationDao: AuthenticationDao;
+  private mailService: MailService;
+  private jwtToken: JwtToken;
+  private memberRepository = AppDataSource.getRepository(Member);
 
   constructor() {
     this.authenticationDao = new AuthenticationDao();
@@ -21,7 +20,7 @@ export class AuthenticationService {
   }
 
   async createMember(member: Member): Promise<MemberWithToken> {
-    const existingMember = await this.authenticationDao.userExists(member)
+    const existingMember = await this.authenticationDao.userExists(member);
     if (existingMember) {
       throw new HttpError(ResponseConflict.message, ResponseConflict.code);
     }
@@ -29,8 +28,8 @@ export class AuthenticationService {
     if (!member.password) {
       throw new HttpError('Please provide password', 400);
     }
-    let db_member = await this.authenticationDao.saveMemberInDB(member);
-     this.mailService.send({
+    const db_member = await this.authenticationDao.saveMemberInDB(member);
+    this.mailService.send({
       to: member.email,
       subject: 'Registration Successful',
       templateName: 'welcome',
@@ -40,10 +39,10 @@ export class AuthenticationService {
       },
     });
     const token = await this.jwtToken.generateToken(db_member.userName);
-    const user = await this.authenticationDao.prepareMemberWithInfo(db_member.id)
+    const user = await this.authenticationDao.prepareMemberWithInfo(db_member.id);
     return {
-      member: user, 
-      token: token
+      member: user,
+      token: token,
     };
   }
 
@@ -79,8 +78,10 @@ export class AuthenticationService {
     await this.authenticationDao.deleteMember(id);
   }
 
-  async signIn(userNameOrEmail: string, password: string): Promise<Member>{
-    const member = await this.memberRepository.findOne({ where: [{ email: userNameOrEmail }, { userName: userNameOrEmail }] });
+  async signIn(userNameOrEmail: string, password: string): Promise<Member> {
+    const member = await this.memberRepository.findOne({
+      where: [{ email: userNameOrEmail }, { userName: userNameOrEmail }],
+    });
     if (!member) {
       throw new HttpError('Member does not exist', 404);
     }
@@ -90,24 +91,23 @@ export class AuthenticationService {
       throw new HttpError('Password is incorrect', 400);
     }
     return await this.authenticationDao.prepareMemberWithInfo(member.id);
-}
+  }
 
-async forgotPassword(email: string) {
-    const member = await this.memberRepository.findOneBy({ email: email});
+  async forgotPassword(email: string) {
+    const member = await this.memberRepository.findOneBy({ email: email });
     if (!member) {
-        throw new HttpError('Member does not exist', 404);
+      throw new HttpError('Member does not exist', 404);
     }
 
     await this.mailService.send({
-        to: member.email,
-        subject: 'Forgot Password',
-        templateName: 'reset-password',
-        replacements: {
-          firstName: member.firstName,
-          lastName: member.lastName,
-        },
-      });
-      return await this.authenticationDao.prepareMemberWithInfo(member.id);
-
-}
+      to: member.email,
+      subject: 'Forgot Password',
+      templateName: 'reset-password',
+      replacements: {
+        firstName: member.firstName,
+        lastName: member.lastName,
+      },
+    });
+    return await this.authenticationDao.prepareMemberWithInfo(member.id);
+  }
 }
