@@ -82,8 +82,8 @@ export class AuthenticationController {
   async forgotPassword(req: Request, res: Response) {
     try {
       const { email } = req.body;
-      const result = await this.authenticationService.forgotPassword(email);
-      return res.status(200).json(result);
+      await this.authenticationService.forgotPassword(email);
+      return res.status(200).json("Forgot Password Mail Sent Successfully!!");
     } catch (error) {
       return SendErrorResponse(error, res);
     }

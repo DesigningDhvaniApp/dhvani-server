@@ -99,7 +99,7 @@ export class AuthenticationService {
       throw new HttpError('Member does not exist', 404);
     }
 
-    await this.mailService.send({
+    this.mailService.send({
       to: member.email,
       subject: 'Forgot Password',
       templateName: 'reset-password',
@@ -108,6 +108,5 @@ export class AuthenticationService {
         lastName: member.lastName,
       },
     });
-    return await this.authenticationDao.prepareMemberWithInfo(member.id);
   }
 }
