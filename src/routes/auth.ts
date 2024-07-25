@@ -1,12 +1,17 @@
 import { Router } from 'express';
-import { SignUpController } from '../features/authentication/sign-up/SignUp.controller';
+import { AuthenticationController } from '../features/authentication/Authentication.controller';
 
 const router = Router();
-const signUpController = new SignUpController();
+const authenticationController = new AuthenticationController();
 
-router.post('/member/signup', signUpController.createMember.bind(signUpController));
-router.put('/member/update', signUpController.updateMember.bind(signUpController));
-router.get('/member/:id', signUpController.findMember.bind(signUpController));
-router.delete('/member/:id', signUpController.deleteMember.bind(signUpController));
+router.post('/member/signup', authenticationController.createMember.bind(authenticationController));
+router.put('/member/update', authenticationController.updateMember.bind(authenticationController));
+router.get('/member/:id', authenticationController.findMember.bind(authenticationController));
+router.delete('/member/:id', authenticationController.deleteMember.bind(authenticationController));
+router.post('/sign-in', authenticationController.findUser.bind(authenticationController));
+router.post(
+  '/forgot-password',
+  authenticationController.forgotPassword.bind(authenticationController),
+);
 
 export default router;

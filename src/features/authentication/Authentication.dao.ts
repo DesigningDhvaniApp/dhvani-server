@@ -1,7 +1,7 @@
-import AppDataSource from '../../../db/data-source';
-import { Member } from '../../../entities/Member';
+import { Member } from '../../entities/Member';
+import AppDataSource from '../../db/data-source';
 
-export class SignUpDao {
+export class AuthenticationDao {
   private memberRepository = AppDataSource.getRepository(Member);
 
   async userExists(member: Partial<Member>): Promise<boolean> {
@@ -26,7 +26,7 @@ export class SignUpDao {
     return await this.memberRepository.findOneBy({ email: email });
   }
 
-  async saveMemberInDB(member: Partial<Member>): Promise<Member> {
+  async saveMemberInDB(member: Member): Promise<Member> {
     const entity = Object.assign(new Member(), member);
     return await this.memberRepository.save(entity);
   }
@@ -38,5 +38,22 @@ export class SignUpDao {
 
   async deleteMember(id: number) {
     return await this.memberRepository.delete(id);
+  }
+
+  async prepareMemberWithInfo(id: number): Promise<Member> {
+    return await this.memberRepository
+      .createQueryBuilder('member')
+      .leftJoinAndSelect('member.address', 'address')
+      .select([
+        'member.id',
+        'member.firstName',
+        'member.lastName',
+        'member.phone',
+        'member.userName',
+        'member.email',
+        'address',
+      ])
+      .where('member.id = :id', { id: id })
+      .getOne();
   }
 }
