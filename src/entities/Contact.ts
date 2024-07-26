@@ -5,15 +5,15 @@ export class Contact {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar'})
+  @Column({ type: 'varchar' })
   name: string;
 
-  @Column({ type: 'bigint'})
+  @Column({ type: 'bigint' })
   phone: number;
 
-  @Column({ type: 'varchar'})
+  @Column({ type: 'varchar' })
   email: string;
 
-  @Column({ type: 'varchar'})
+  @Column({ type: 'varchar' })
   message: string;
 }
