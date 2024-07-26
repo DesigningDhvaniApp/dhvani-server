@@ -98,7 +98,12 @@ export class AuthenticationService {
     if (!member) {
       throw new HttpError('Member does not exist', 404);
     }
+    const token = await this.jwtToken.generateToken(member.email);
+    // console.log(token)
+    member.forgotPasswordToken = token;
+    await this.authenticationDao.saveMemberInDB(member);
 
+    const url = `http://localhost:3000/auth/member/forgot-password/verify?token=${token}`;
     this.mailService.send({
       to: member.email,
       subject: 'Forgot Password',
@@ -106,7 +111,28 @@ export class AuthenticationService {
       replacements: {
         firstName: member.firstName,
         lastName: member.lastName,
+        url: url,
       },
     });
+  }
+
+  async verifyForgotPassword(token: string, password: string) {
+    const decode = await this.jwtToken.verifyToken(token)
+    if (!decode) {
+      throw new Error('Invalid or expired token');
+    }
+    const email = decode.userName;
+    if (!email) {
+      throw new HttpError('Member does not exist', 404);
+    }
+    const member = await this.memberRepository.findOneBy({ email: email });
+    if (member.forgotPasswordToken !== token) {
+      throw new HttpError('This link is not valid', 400);
+    } else {
+      member.forgotPasswordToken = null;
+      member.password = password;
+      await this.authenticationDao.saveMemberInDB(member);
+    }
+
   }
 }

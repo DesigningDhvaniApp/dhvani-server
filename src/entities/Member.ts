@@ -42,4 +42,7 @@ export class Member {
   @OneToOne(() => Address, { cascade: true })
   @JoinColumn({ name: 'address_id' })
   address: Address;
+
+  @Column({ type: 'varchar', nullable: true })
+  forgotPasswordToken: string | null;
 }
