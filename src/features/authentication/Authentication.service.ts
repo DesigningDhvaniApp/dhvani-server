@@ -117,6 +117,9 @@ export class AuthenticationService {
   }
 
   async verifyForgotPassword(token: string, password: string) {
+    if (!password) {
+      throw new Error('Please enter new password');
+    }
     const decode = await this.jwtToken.verifyToken(token);
     if (!decode) {
       throw new Error('Invalid or expired token');
