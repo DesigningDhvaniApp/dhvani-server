@@ -88,4 +88,15 @@ export class AuthenticationController {
       return SendErrorResponse(error, res);
     }
   }
+
+  async verifyForgotPassword(req: Request, res: Response) {
+    try {
+      const { token } = req.query;
+      const { password } = req.body;
+      await this.authenticationService.verifyForgotPassword(token as string, password);
+      return res.status(200).json('Verified');
+    } catch (error) {
+      return SendErrorResponse(error, res);
+    }
+  }
 }

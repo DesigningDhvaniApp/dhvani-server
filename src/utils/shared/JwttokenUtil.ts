@@ -4,7 +4,7 @@ const SECRET_KEY = 'dhvani';
 export class JwtToken {
   async generateToken(userName: string): Promise<string> {
     const payload = { userName: userName };
-    return jwt.sign(payload, SECRET_KEY, { expiresIn: '5m' });
+    return jwt.sign(payload, SECRET_KEY, { expiresIn: '24h' });
   }
 
   async verifyToken(token: string) {
