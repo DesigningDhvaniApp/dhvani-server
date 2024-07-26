@@ -18,5 +18,4 @@ router.post(
   authenticationController.verifyForgotPassword.bind(authenticationController),
 );
 
-
 export default router;

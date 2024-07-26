@@ -117,7 +117,7 @@ export class AuthenticationService {
   }
 
   async verifyForgotPassword(token: string, password: string) {
-    const decode = await this.jwtToken.verifyToken(token)
+    const decode = await this.jwtToken.verifyToken(token);
     if (!decode) {
       throw new Error('Invalid or expired token');
     }
@@ -133,6 +133,5 @@ export class AuthenticationService {
       member.password = password;
       await this.authenticationDao.saveMemberInDB(member);
     }
-
   }
 }
