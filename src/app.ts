@@ -1,12 +1,14 @@
 import express from 'express';
 import AppDataSource from './db/data-source';
 import authRoutes from './routes/auth';
+import contactRoute from './routes/contact';
 
 const app = express();
 
 app.use(express.json());
 
 app.use('/auth/member', authRoutes);
+app.use('/', contactRoute);
 
 AppDataSource.initialize()
   .then(() => {
