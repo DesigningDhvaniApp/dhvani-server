@@ -5,6 +5,7 @@
     "removeComments": true,
     "emitDeclarationOnly": true,
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,
     "target": "ES6",
     "sourceMap": true,

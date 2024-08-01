@@ -45,4 +45,7 @@ export class Member {
 
   @Column({ type: 'varchar', nullable: true })
   forgotPasswordToken: string | null;
+
+  @Column({ default: false })
+  isAdmin: boolean;
 }

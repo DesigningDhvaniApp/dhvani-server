@@ -5,6 +5,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies/snake-naming.stra
 import { Reference } from '../entities/Reference';
 import { Member } from '../entities/Member';
 import { Address } from '../entities/Address';
+import { Contact } from '../entities/Contact';
 
 config();
 
@@ -18,7 +19,7 @@ const AppDataSource = new DataSource({
   schema: process.env.DB_SCHEMA,
   synchronize: false,
   logging: false,
-  entities: [Reference, Member, Address],
+  entities: [Reference, Member, Address, Contact],
   migrations: [],
   subscribers: [],
   migrationsTableName: '_migrations',
