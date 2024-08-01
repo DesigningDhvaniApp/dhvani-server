@@ -1,20 +1,13 @@
-import { Member } from '../../entities/Member';
-import AppDataSource from '../../db/data-source';
 import { Project } from '../../entities/Project';
-import { MailService } from '../mail-service/MailService';
-import { ProjectDao } from './Project.dao';
 import { AddProjectInput, ProjectWithID } from './Types';
+import { ProjectDao } from '../../dbutils/project.dao';
+import { MemberDao } from '../../dbutils/member.dao';
+import { ProjectUtils } from './Project.utils';
 
 export class ProjectService {
-  private projectDao: ProjectDao;
-  private projectRepository = AppDataSource.getRepository(Project);
-  private memberRepository = AppDataSource.getRepository(Member);
-  private mailService: MailService;
-
-  constructor() {
-    this.projectDao = new ProjectDao();
-    this.mailService = new MailService();
-  }
+  private projectDao = new ProjectDao();
+  private memberDao = new MemberDao();
+  private projectUtils = new ProjectUtils();
 
   async addProject(input: AddProjectInput): Promise<ProjectWithID> {
     const {
@@ -38,16 +31,11 @@ export class ProjectService {
     project.fundRaised = fundRaised;
     project.planOfAction = planOfAction;
     project.flyer = file;
-    const saveProject = await this.projectDao.saveProjectInDB(project);
+    const saveProject = await this.projectDao.save(project);
 
-    const users = await this.memberRepository.find();
+    const users = await this.memberDao.find();
     for (const user of users) {
-      this.mailService.send({
-        to: user.email,
-        subject: 'Adding new project',
-        templateName: 'add-project',
-        replacements: {},
-      });
+      this.projectUtils.sendMailToUsers(user);
     }
     return { id: saveProject.id };
   }

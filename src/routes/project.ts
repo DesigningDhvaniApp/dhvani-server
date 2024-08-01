@@ -7,7 +7,7 @@ const router = Router();
 const projectController = new ProjectController();
 
 router.post(
-  '/project',
+  '/',
   verify,
   uploadProjectFiles.single('flyer'),
   projectController.addProject.bind(projectController),

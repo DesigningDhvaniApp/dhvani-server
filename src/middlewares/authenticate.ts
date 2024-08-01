@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { Response403 } from '../utils/Response';
 import { JwtToken } from '../utils/shared/JwttokenUtil';
-import { AuthenticationDao } from '../features/authentication/Authentication.dao';
+import { MemberDao } from '../dbutils/member.dao';
 
 export const verify = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -14,10 +14,12 @@ export const verify = async (req: Request, res: Response, next: NextFunction) =>
 
     // decode the token
     const jwtToken = new JwtToken();
+    7744;
+
     const decode = await jwtToken.verifyToken(token);
 
-    const authDao = new AuthenticationDao();
-    const db_member = await authDao.findMemberByEmail(decode.userName);
+    const memberDao = new MemberDao();
+    const db_member = await memberDao.findByEmail(decode.userName);
 
     if (!db_member) {
       return res.status(Response403.code).send('Unauthorized');
