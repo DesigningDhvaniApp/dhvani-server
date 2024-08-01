@@ -1,21 +1,21 @@
 import NodeMailer from 'nodemailer';
-import dotenv from 'dotenv';
 import * as handlebars from 'handlebars';
 import * as fs from 'fs';
 import * as path from 'path';
 import { MailData } from './Types';
+import config from '../../config';
 
-dotenv.config();
+const mailConfig = config.MAIL;
 
 export class MailService {
   createTransporter() {
     return NodeMailer.createTransport({
-      host: process.env.MAIL_HOST,
-      port: process.env.MAIL_PORT,
+      host: mailConfig.MAIL_HOST,
+      port: mailConfig.MAIL_PORT,
       secure: true,
       auth: {
-        user: process.env.MAIL_AUTH_USER,
-        pass: process.env.MAIL_AUTH_PASSWORD,
+        user: mailConfig.MAIL_AUTH_USER,
+        pass: mailConfig.MAIL_AUTH_PASSWORD,
       },
     });
   }
@@ -31,7 +31,7 @@ export class MailService {
       const replacements = mailData.replacements || {}; // Define the replacements object, make sure to include all necessary placeholders
       const htmlToSend = template(replacements); // Generate the final HTML by applying the replacements
       const mailOptions = {
-        from: `<${process.env.MAIL_AUTH_USER}>`,
+        from: `<${mailConfig.MAIL_AUTH_USER}>`,
         to: mailData.to,
         subject: mailData.subject,
         html: htmlToSend,

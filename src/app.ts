@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json());
 
 app.use('/auth/member', authRoutes);
-app.use('/', contactRoute);
+app.use('/contact', contactRoute);
 
 AppDataSource.initialize()
   .then(() => {

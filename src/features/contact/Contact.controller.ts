@@ -2,13 +2,7 @@ import * as yup from 'yup';
 import { Request, Response } from 'express';
 import { ContactService } from './Contact.service';
 import { Response200, SendErrorResponse } from '../../utils/Response';
-
-const contactSchema = yup.object({
-  name: yup.string().required(),
-  phone: yup.number().required(),
-  email: yup.string().required(),
-  message: yup.string().required(),
-});
+import { contactSchema } from '../../helpers/validations/contact';
 
 export class ContactController {
   private contactService: ContactService;
