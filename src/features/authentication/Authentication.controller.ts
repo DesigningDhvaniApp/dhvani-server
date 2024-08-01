@@ -1,8 +1,8 @@
-import * as yup from 'yup';
 import { Request, Response } from 'express';
 import { AuthenticationService } from './Authentication.service';
 import { Response200, SendErrorResponse } from '../../utils/Response';
 import { memberSchema } from '../../helpers/validations/auth';
+import * as yup from 'yup';
 
 export class AuthenticationController {
   private authenticationService: AuthenticationService;
