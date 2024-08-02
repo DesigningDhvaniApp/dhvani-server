@@ -32,5 +32,4 @@ export class ProjectController {
       return SendErrorResponse(error, res);
     }
   }
-
 }
