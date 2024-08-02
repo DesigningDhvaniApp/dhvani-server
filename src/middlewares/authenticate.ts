@@ -14,8 +14,6 @@ export const verify = async (req: Request, res: Response, next: NextFunction) =>
 
     // decode the token
     const jwtToken = new JwtToken();
-    7744;
-
     const decode = await jwtToken.verifyToken(token);
 
     const memberDao = new MemberDao();

@@ -18,27 +18,10 @@ export class ProjectController {
   async addProject(req: MulterRequest, res: Response) {
     try {
       //   console.log(req['user']);
-      const {
-        name,
-        description,
-        startDate,
-        endDate,
-        goalAmount,
-        fundRaised,
-        aboutTheCause,
-        planOfAction,
-      } = req.body;
       await projectSchema.validate(req.body);
       const file = req.file.filename;
       const result = await this.projectService.addProject({
-        name,
-        description,
-        startDate,
-        endDate,
-        goalAmount,
-        fundRaised,
-        aboutTheCause,
-        planOfAction,
+        ...req.body,
         file,
       });
       return res.status(Response200.code).json(result);
@@ -49,4 +32,5 @@ export class ProjectController {
       return SendErrorResponse(error, res);
     }
   }
+
 }
