@@ -2,13 +2,16 @@ import express from 'express';
 import AppDataSource from './db/data-source';
 import authRoutes from './routes/auth';
 import contactRoute from './routes/contact';
+import projectRoutes from './routes/project';
 
 const app = express();
+global.__basepath = __dirname;
 
 app.use(express.json());
 
 app.use('/auth/member', authRoutes);
 app.use('/contact', contactRoute);
+app.use('/api/project', projectRoutes);
 
 AppDataSource.initialize()
   .then(() => {

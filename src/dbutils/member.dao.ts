@@ -10,6 +10,10 @@ export class MemberDao {
     return await this.memberRepository.findOneBy({ userName: userName });
   }
 
+  async find() {
+    return await this.memberRepository.find();
+  }
+
   async findOne(options: FindOneOptions<Member>): Promise<Member | null> {
     return await this.memberRepository.findOne(options);
   }

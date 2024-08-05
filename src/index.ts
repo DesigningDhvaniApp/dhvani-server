@@ -2,6 +2,7 @@ import app from './app';
 import dotenv from 'dotenv';
 dotenv.config();
 
+global.basepath = __dirname;
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
