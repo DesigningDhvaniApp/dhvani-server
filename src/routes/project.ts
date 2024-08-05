@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { ProjectController } from '../features/project/Project.controller';
-import { verify } from '../middlewares/authenticate';
+import { isAdmin } from '../middlewares/authenticate';
 import uploadProjectFiles from '../multer-fileUploader/multer';
 
 const router = Router();
@@ -8,10 +8,9 @@ const projectController = new ProjectController();
 
 router.post(
   '/',
-  verify,
+  isAdmin,
   uploadProjectFiles.single('flyer'),
   projectController.addProject.bind(projectController),
 );
 
-router.get('/:id', verify, projectController.getProject.bind(projectController));
 export default router;

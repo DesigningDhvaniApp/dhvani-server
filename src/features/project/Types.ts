@@ -7,7 +7,7 @@ export interface AddProjectInput {
   fundRaised: number;
   aboutTheCause: string;
   planOfAction: string;
-  file: string;
+  file?: string;
 }
 
 export interface ProjectWithID {

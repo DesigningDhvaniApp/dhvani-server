@@ -3,7 +3,7 @@ import { Response403 } from '../utils/Response';
 import { JwtToken } from '../utils/shared/JwttokenUtil';
 import { MemberDao } from '../dbutils/member.dao';
 
-export const verify = async (req: Request, res: Response, next: NextFunction) => {
+export const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
 
