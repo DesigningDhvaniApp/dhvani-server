@@ -10,7 +10,6 @@ export class ProjectService {
   private projectUtils = new ProjectUtils();
 
   async addProject(input: AddProjectInput): Promise<ProjectWithID> {
-    
     const project = Object.assign(new Project(), input);
     const saveProject = await this.projectDao.save(project);
 
