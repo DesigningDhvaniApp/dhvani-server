@@ -18,10 +18,9 @@ export class ProjectController {
   async addProject(req: MulterRequest, res: Response) {
     try {
       await projectSchema.validate(req.body);
-      const file = req.file.filename;
       const result = await this.projectService.addProject({
         ...req.body,
-        file,
+        flyer: req.file?.filename,
       });
       return res.status(Response200.code).json(result);
     } catch (error) {
