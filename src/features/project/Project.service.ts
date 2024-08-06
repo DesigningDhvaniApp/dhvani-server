@@ -3,7 +3,7 @@ import { AddProjectInput, ProjectIdWithName, ProjectWithID } from './Types';
 import { ProjectDao } from '../../dbutils/project.dao';
 import { MemberDao } from '../../dbutils/member.dao';
 import { ProjectUtils } from './Project.utils';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { HttpError, Response404 } from '../../utils/Response';
 
 export class ProjectService {
@@ -28,10 +28,10 @@ export class ProjectService {
       throw new HttpError('Project not found', Response404.code);
     }
 
-    const today = moment().startOf('day');
-    const projectStartDate = moment(existingProject.startDate);
+    const today = DateTime.now().startOf('day');
+    const projectStartDate = DateTime.fromISO(existingProject.startDate).startOf('day');
 
-    if (projectStartDate.isSameOrBefore(today)) {
+    if (projectStartDate <= today) {
       throw new Error('Cannot delete a project that has already started');
     }
     await this.projectDao.deleteProject(id);
