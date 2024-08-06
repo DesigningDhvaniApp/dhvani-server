@@ -13,4 +13,6 @@ router.post(
   projectController.addProject.bind(projectController),
 );
 
+router.delete('/:id', isAdmin, projectController.deleteProject.bind(projectController));
+
 export default router;

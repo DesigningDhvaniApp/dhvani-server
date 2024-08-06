@@ -1,8 +1,10 @@
 import { Project } from '../../entities/Project';
-import { AddProjectInput, ProjectWithID } from './Types';
+import { AddProjectInput, ProjectIdWithName, ProjectWithID } from './Types';
 import { ProjectDao } from '../../dbutils/project.dao';
 import { MemberDao } from '../../dbutils/member.dao';
 import { ProjectUtils } from './Project.utils';
+import moment from 'moment';
+import { HttpError, Response404 } from '../../utils/Response';
 
 export class ProjectService {
   private projectDao = new ProjectDao();
@@ -18,5 +20,24 @@ export class ProjectService {
       this.projectUtils.sendMailToUsers(user);
     }
     return { id: saveProject.id };
+  }
+
+  async deleteProject(id: number): Promise<ProjectIdWithName> {
+    const existingProject = await this.projectDao.findById(id);
+    if (!existingProject) {
+      throw new HttpError('Project not found', Response404.code);
+    }
+
+    const today = moment().startOf('day');
+    const projectStartDate = moment(existingProject.startDate);
+
+    if (projectStartDate.isSameOrBefore(today)) {
+      throw new Error('Cannot delete a project that has already started');
+    }
+    await this.projectDao.deleteProject(id);
+    return {
+      id: id,
+      name: existingProject.name,
+    };
   }
 }
