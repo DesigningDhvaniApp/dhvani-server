@@ -29,13 +29,6 @@ export class Project {
   @Column({ type: 'varchar', nullable: true })
   planOfAction?: string;
 
-  @Column({
-    type: 'enum',
-    enum: ['COMPLETED', 'ONGOING', 'UPCOMING'],
-    default: 'UPCOMING',
-  })
-  status: 'COMPLETED' | 'ONGOING' | 'UPCOMING';
-
   @Column({ type: 'varchar', nullable: true })
   flyer?: string;
 }

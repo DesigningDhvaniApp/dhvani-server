@@ -1,29 +1,17 @@
 import { Project } from '../../entities/Project';
-import { AddProjectInput, ProjectWithID } from './Types';
+import { AddProjectInput, GetProjectDetails, ProjectWithID } from './Types';
 import { ProjectDao } from '../../dbutils/project.dao';
 import { MemberDao } from '../../dbutils/member.dao';
 import { ProjectUtils } from './Project.utils';
-import AppDataSource from '../../db/data-source';
 import { DateTime } from 'luxon';
 
 export class ProjectService {
   private projectDao = new ProjectDao();
   private memberDao = new MemberDao();
   private projectUtils = new ProjectUtils();
-  private projectRepository = AppDataSource.getRepository(Project);
 
   async addProject(input: AddProjectInput): Promise<ProjectWithID> {
     const project = Object.assign(new Project(), input);
-    const now = DateTime.now().toFormat('yyyy-MM-dd');
-
-    if (now < project.startDate) {
-      project.status = 'UPCOMING';
-    } else if (now > project.endDate) {
-      project.status = 'COMPLETED';
-    } else {
-      project.status = 'ONGOING';
-    }
-
     const saveProject = await this.projectDao.save(project);
 
     const users = await this.memberDao.find();
@@ -33,7 +21,28 @@ export class ProjectService {
     return { id: saveProject.id };
   }
 
-  async getProjects(id: number): Promise<Project | undefined> {
-    return await this.projectDao.findById(id);
+  async getProjects(id: number): Promise<GetProjectDetails> {
+    const project = await this.projectDao.findById(id);
+    const today = DateTime.now().toFormat('yyyy-MM-dd');
+    let status = '';
+    if (today < project.startDate) {
+      status = 'UPCOMING';
+    } else if (today > project.endDate) {
+      status = 'COMPLETED';
+    } else {
+      status = 'ONGOING';
+    }
+    return {
+      id: project.id,
+      name: project.name,
+      description: project.description,
+      startDate: project.startDate,
+      endDate: project.endDate,
+      goalAmount: project.goalAmount,
+      fundRaised: project.fundRaised,
+      aboutTheCause: project.aboutTheCause,
+      planOfAction: project.planOfAction,
+      status: status,
+    };
   }
 }
