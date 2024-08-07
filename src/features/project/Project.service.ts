@@ -21,7 +21,7 @@ export class ProjectService {
     return { id: saveProject.id };
   }
 
-  async getProjects(id: number): Promise<GetProjectDetails> {
+  async getProject(id: number): Promise<GetProjectDetails> {
     const project = await this.projectDao.findById(id);
     const today = DateTime.now().toFormat('yyyy-MM-dd');
     let status = '';
