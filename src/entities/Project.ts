@@ -32,7 +32,7 @@ export class Project {
   @Column({
     type: 'enum',
     enum: ['COMPLETED', 'ONGOING', 'UPCOMING'],
-    default: 'UPCOMING'
+    default: 'UPCOMING',
   })
   status: 'COMPLETED' | 'ONGOING' | 'UPCOMING';
 

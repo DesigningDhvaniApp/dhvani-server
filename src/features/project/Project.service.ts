@@ -15,7 +15,7 @@ export class ProjectService {
   async addProject(input: AddProjectInput): Promise<ProjectWithID> {
     const project = Object.assign(new Project(), input);
     const now = DateTime.now().toFormat('yyyy-MM-dd');
-    
+
     if (now < project.startDate) {
       project.status = 'UPCOMING';
     } else if (now > project.endDate) {
