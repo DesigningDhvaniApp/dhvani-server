@@ -7,6 +7,7 @@ export interface AddProjectInput {
   fundRaised: number;
   aboutTheCause: string;
   planOfAction: string;
+  status: string;
   flyer?: string;
 }
 
