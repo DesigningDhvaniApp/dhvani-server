@@ -8,4 +8,8 @@ export class ProjectDao {
     const entity = Object.assign(new Project(), project);
     return await this.projectRepository.save(entity);
   }
+
+  async find() {
+    return await this.projectRepository.find();
+  }
 }
