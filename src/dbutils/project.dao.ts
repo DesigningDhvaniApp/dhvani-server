@@ -12,7 +12,7 @@ export class ProjectDao {
   async find() {
     return await this.projectRepository.find();
   }
-  
+
   async findById(id: number): Promise<Project | null> {
     if (!id) return null;
     return await this.projectRepository.findOneBy({ id: id });

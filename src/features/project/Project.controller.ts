@@ -40,7 +40,7 @@ export class ProjectController {
       return SendErrorResponse(error, res);
     }
   }
-  
+
   async deleteProject(req: Request, res: Response) {
     try {
       const { id } = req.params;

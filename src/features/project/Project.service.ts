@@ -45,7 +45,7 @@ export class ProjectService {
 
     return result;
   }
-  
+
   async deleteProject(id: number): Promise<ProjectIdWithName> {
     const existingProject = await this.projectDao.findById(id);
     if (!existingProject) {
