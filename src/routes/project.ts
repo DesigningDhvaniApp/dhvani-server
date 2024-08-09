@@ -14,4 +14,5 @@ router.post(
 );
 
 router.get('/:id', projectController.getProject.bind(projectController));
+
 export default router;

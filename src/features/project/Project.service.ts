@@ -23,8 +23,13 @@ export class ProjectService {
 
   async getProject(id: number): Promise<GetProjectDetails> {
     const project = await this.projectDao.findById(id);
+    if (!project) {
+      throw new Error('Project with Id not found');
+    }
+
     const today = DateTime.now().toFormat('yyyy-MM-dd');
     let status = '';
+
     if (today < project.startDate) {
       status = 'UPCOMING';
     } else if (today > project.endDate) {
@@ -32,6 +37,7 @@ export class ProjectService {
     } else {
       status = 'ONGOING';
     }
+
     return {
       id: project.id,
       name: project.name,
