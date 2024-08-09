@@ -40,4 +40,14 @@ export class ProjectController {
       return SendErrorResponse(error, res);
     }
   }
+  
+  async deleteProject(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const result = await this.projectService.deleteProject(parseInt(id));
+      return res.status(200).json(result);
+    } catch (error) {
+      return SendErrorResponse(error, res);
+    }
+  }
 }
