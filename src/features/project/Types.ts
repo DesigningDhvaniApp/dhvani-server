@@ -13,3 +13,8 @@ export interface AddProjectInput {
 export interface ProjectWithID {
   id: number;
 }
+
+export interface ProjectIdWithName {
+  id: number;
+  name: string;
+}
