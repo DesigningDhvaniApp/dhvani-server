@@ -26,3 +26,8 @@ export interface GetProjectDetails {
   planOfAction: string;
   status: string;
 }
+
+export interface ProjectIdWithName {
+  id: number;
+  name: string;
+}
