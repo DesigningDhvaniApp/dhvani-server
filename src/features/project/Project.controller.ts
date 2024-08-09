@@ -31,6 +31,16 @@ export class ProjectController {
     }
   }
 
+  async getProject(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const result = await this.projectService.getProject(parseInt(id));
+      return res.status(Response200.code).json(result);
+    } catch (error) {
+      return SendErrorResponse(error, res);
+    }
+  }
+
   async getProjects(req: Request, res: Response) {
     try {
       const category = req.query.category as string;
