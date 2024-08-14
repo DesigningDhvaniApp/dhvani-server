@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { ProjectController } from '../features/project/Project.controller';
 import { isAdmin } from '../middlewares/authenticate';
-import uploadProjectFiles from '../multer-fileUploader/multer';
+import { uploadProjectFiles } from '../multer-fileUploader/multer';
 
 const router = Router();
 const projectController = new ProjectController();

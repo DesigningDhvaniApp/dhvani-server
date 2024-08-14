@@ -6,6 +6,7 @@ import { Address } from '../entities/Address';
 import { Contact } from '../entities/Contact';
 import config from '../config';
 import { Project } from '../entities/Project';
+import { Event } from '../entities/Event';
 
 const dbConfig = config.DB;
 
@@ -19,7 +20,7 @@ const AppDataSource = new DataSource({
   schema: dbConfig.DB_SCHEMA,
   synchronize: false,
   logging: false,
-  entities: [Member, Address, Contact, Project],
+  entities: [Member, Address, Contact, Project, Event],
   migrations: [],
   subscribers: [],
   migrationsTableName: '_migrations',
