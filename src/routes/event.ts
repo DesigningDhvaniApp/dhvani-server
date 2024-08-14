@@ -13,6 +13,4 @@ router.post(
   eventController.addEvent.bind(eventController),
 );
 
-router.delete('/:id', isAdmin, eventController.deleteEvent.bind(eventController));
-
 export default router;
