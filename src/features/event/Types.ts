@@ -34,12 +34,3 @@ export interface GetEventDetails {
   flyer?: string;
   status: string;
 }
-
-export interface UpdateEventInput {
-  id: number;
-  name: string;
-  startDate: Date;
-  endDate: Date;
-  cost: number;
-  flyer?: string;
-}
