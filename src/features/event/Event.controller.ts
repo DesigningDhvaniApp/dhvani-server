@@ -8,6 +8,15 @@ interface MulterRequest extends Request {
 
 export class EventController {
   private eventService = new EventService();
+  
+   async deleteEvent(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const result = await this.eventService.deleteEvent(parseInt(id));
+      return res.status(Response200.code).json(result);
+    } catch (error) {
+      return SendErrorResponse(error, res);
+    }
 
   async addEvent(req: MulterRequest, res: Response) {
     try {
