@@ -18,7 +18,6 @@ const projectStorage = multer.diskStorage({
 });
 const uploadProjectFiles = multer({ storage: projectStorage });
 
-export default uploadProjectFiles;
 const eventStorage = multer.diskStorage({
   destination: (req, file, callback) => {
     const eventFolder = global.__basepath + '/uploads/events';
