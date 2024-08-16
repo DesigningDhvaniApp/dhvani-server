@@ -1,17 +1,43 @@
 import { EventDao } from '../../dbutils/event.dao';
-import { HttpError, ResponseConflict } from '../../utils/Response';
-import { AddEventInput, GetEventDetails } from './Types';
-import { DateTime } from 'luxon';
 import { Event } from '../../entities/Event';
-import { HttpError, Response404 } from '../../utils/Response';
-import { EventWithIdAndName } from './Types';
+import { HttpError, ResponseConflict, Response404 } from '../../utils/Response';
+import { AddEventInput, GetEventDetails, EventWithIdAndName } from './Types';
 import { DateTime } from 'luxon';
-import { Event } from '../../entities/Event';
-import { HttpError, ResponseConflict } from '../../utils/Response';
-import { AddEventInput } from './Types';
 
 export class EventService {
   private eventDao = new EventDao();
+
+  async getEvent(id: number): Promise<GetEventDetails> {
+    const event = await this.eventDao.findById(id);
+    if (!event) {
+      throw new Error('Event with Id not found');
+    }
+
+    const today = DateTime.now().toFormat('yyyy-MM-dd');
+    let status = '';
+
+    if (today < event.eventStartDate) {
+      status = 'UPCOMING';
+    } else if (today > event.eventEndDate) {
+      status = 'COMPLETED';
+    } else {
+      status = 'ONGOING';
+    }
+
+    return {
+      id: event.id,
+      eventName: event.eventName,
+      eventType: event.eventType,
+      eventDescription: event.eventDescription,
+      eventStartDate: event.eventStartDate,
+      eventEndDate: event.eventEndDate,
+      eventOrganisers: event.eventOrganisers,
+      eventCost: event.eventCost,
+      eventVenue: event.eventVenue,
+      maxPlayers: event.maxPlayers,
+      status: status,
+    };
+  }
 
   async getEvents(category: string) {
     const events = await this.eventDao.find();
