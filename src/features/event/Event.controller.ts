@@ -8,6 +8,16 @@ interface MulterRequest extends Request {
 
 export class EventController {
   private eventService = new EventService();
+
+  async getEvents(req: Request, res: Response) {
+    try {
+      const category = req.query.category as string;
+      const result = await this.eventService.getEvents(category);
+      return res.status(Response200.code).json(result);
+    } catch (error) {
+      return SendErrorResponse(error, res);
+    }
+  }
   
    async deleteEvent(req: Request, res: Response) {
     try {
@@ -17,6 +27,7 @@ export class EventController {
     } catch (error) {
       return SendErrorResponse(error, res);
     }
+  }
 
   async addEvent(req: MulterRequest, res: Response) {
     try {

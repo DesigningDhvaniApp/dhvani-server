@@ -22,18 +22,15 @@ export interface EventWithIdAndName {
 
 export interface GetEventDetails {
   id: number;
-  name: string;
-  startDate: Date;
-  endDate: Date;
-  cost: number;
-  status: string;
-}
-
-export interface UpdateEventInput {
-  id: number;
-  name: string;
-  startDate: Date;
-  endDate: Date;
-  cost: number;
+  eventName: string;
+  eventType: string;
+  eventDescription: string;
+  eventStartDate: Date;
+  eventEndDate: Date;
+  eventOrganisers: string;
+  eventCost: number;
+  eventVenue: string;
+  maxPlayers: number;
   flyer?: string;
+  status: string;
 }

@@ -1,4 +1,8 @@
 import { EventDao } from '../../dbutils/event.dao';
+import { HttpError, ResponseConflict } from '../../utils/Response';
+import { AddEventInput, GetEventDetails } from './Types';
+import { DateTime } from 'luxon';
+import { Event } from '../../entities/Event';
 import { HttpError, Response404 } from '../../utils/Response';
 import { EventWithIdAndName } from './Types';
 import { DateTime } from 'luxon';
@@ -8,6 +12,32 @@ import { AddEventInput } from './Types';
 
 export class EventService {
   private eventDao = new EventDao();
+
+  async getEvents(category: string) {
+    const events = await this.eventDao.find();
+    const result = [];
+
+    for (let i = 0; i < events.length; i++) {
+      const event = events[i] as GetEventDetails;
+      const today = DateTime.now().toFormat('yyyy-MM-dd');
+      if (category == 'completed' && today > event.eventEndDate) {
+        event.status = 'COMPLETED';
+        result.push(event);
+      } else if (category == 'upcoming' && today < event.eventStartDate) {
+        event.status = 'UPCOMING';
+        result.push(event);
+      } else if (
+        category == 'ongoing' &&
+        today <= event.eventEndDate &&
+        today >= event.eventStartDate
+      ) {
+        event.status = 'ONGOING';
+        result.push(event);
+      }
+    }
+
+    return result;
+  }
 
   async deleteEvent(id: number): Promise<EventWithIdAndName> {
     const existingEvent = await this.eventDao.findById(id);
