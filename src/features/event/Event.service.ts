@@ -2,6 +2,9 @@ import { EventDao } from '../../dbutils/event.dao';
 import { HttpError, Response404 } from '../../utils/Response';
 import { EventWithIdAndName } from './Types';
 import { DateTime } from 'luxon';
+import { Event } from '../../entities/Event';
+import { HttpError, ResponseConflict } from '../../utils/Response';
+import { AddEventInput } from './Types';
 
 export class EventService {
   private eventDao = new EventDao();
@@ -23,5 +26,17 @@ export class EventService {
       id: existingEvent.id,
       name: existingEvent.eventName,
     };
+  }
+  
+  async addEvent(input: AddEventInput): Promise<Event> {
+    const existingEvent = await this.eventDao.eventExists(input);
+    if (existingEvent) {
+      throw new HttpError(ResponseConflict.message, ResponseConflict.code);
+    }
+
+    const event = Object.assign(new Event(), input);
+    await this.eventDao.save(event);
+
+    return event;
   }
 }
