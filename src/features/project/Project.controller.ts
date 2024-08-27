@@ -68,7 +68,7 @@ export class ProjectController {
       const { filename } = req.params;
       const filePath = path.join(__dirname, `../../uploads/projects/${filename}`);
       const ext = filename.split('.')[1];
-      var img = fs.readFileSync(filePath);
+      const img = fs.readFileSync(filePath);
       res.writeHead(200, { 'Content-Type': `image/${ext}` });
       res.end(img, 'binary');
     } catch (error) {
@@ -80,7 +80,7 @@ export class ProjectController {
     try {
       const { filename } = req.params;
       const filePath = path.join(__dirname, `../../uploads/projects/${filename}`);
-      res.download(filePath)
+      res.download(filePath);
     } catch (error) {
       return SendErrorResponse(error, res);
     }
