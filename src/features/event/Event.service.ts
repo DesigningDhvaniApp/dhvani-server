@@ -83,7 +83,7 @@ export class EventService {
       name: existingEvent.eventName,
     };
   }
-  
+
   async addEvent(input: AddEventInput): Promise<Event> {
     const existingEvent = await this.eventDao.eventExists(input);
     if (existingEvent) {

@@ -18,5 +18,6 @@ router.get('/:id', projectController.getProject.bind(projectController));
 router.get('/', projectController.getProjects.bind(projectController));
 
 router.delete('/:id', isAdmin, projectController.deleteProject.bind(projectController));
+router.get('/img/:filename', projectController.streamImage.bind(projectController));
 
 export default router;

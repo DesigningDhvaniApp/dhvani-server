@@ -3,6 +3,8 @@ import { Request, Response } from 'express';
 import { Response200, SendErrorResponse } from '../../utils/Response';
 import { ProjectService } from './Project.service';
 import { projectSchema } from '../../helpers/validations/project';
+import fs from 'fs';
+import path from 'path';
 
 interface MulterRequest extends Request {
   file: any;
@@ -56,6 +58,29 @@ export class ProjectController {
       const { id } = req.params;
       const result = await this.projectService.deleteProject(parseInt(id));
       return res.status(200).json(result);
+    } catch (error) {
+      return SendErrorResponse(error, res);
+    }
+  }
+
+  async streamImage(req: Request, res: Response) {
+    try {
+      const { filename } = req.params;
+      const filePath = path.join(__dirname, `../../uploads/projects/${filename}`);
+      const ext = filename.split('.')[1];
+      var img = fs.readFileSync(filePath);
+      res.writeHead(200, { 'Content-Type': `image/${ext}` });
+      res.end(img, 'binary');
+    } catch (error) {
+      return SendErrorResponse(error, res);
+    }
+  }
+
+  async downloadImage(req: Request, res: Response) {
+    try {
+      const { filename } = req.params;
+      const filePath = path.join(__dirname, `../../uploads/projects/${filename}`);
+      res.download(filePath)
     } catch (error) {
       return SendErrorResponse(error, res);
     }

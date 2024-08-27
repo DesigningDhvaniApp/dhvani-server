@@ -17,7 +17,7 @@ export class EventController {
       return SendErrorResponse(error, res);
     }
   }
-  
+
   async getEvents(req: Request, res: Response) {
     try {
       const category = req.query.category as string;
@@ -37,20 +37,11 @@ export class EventController {
       return SendErrorResponse(error, res);
     }
   }
-  
-   async deleteEvent(req: Request, res: Response) {
+
+  async deleteEvent(req: Request, res: Response) {
     try {
       const { id } = req.params;
       const result = await this.eventService.deleteEvent(parseInt(id));
-      return res.status(Response200.code).json(result);
-    } catch (error) {
-      return SendErrorResponse(error, res);
-    }
-  }
-
-  async addEvent(req: MulterRequest, res: Response) {
-    try {
-      const result = await this.eventService.addEvent({ ...req.body, flyer: req.file?.filename });
       return res.status(Response200.code).json(result);
     } catch (error) {
       return SendErrorResponse(error, res);
